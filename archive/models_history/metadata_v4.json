@@ -1,0 +1,67 @@
+{
+  "model_name": "Lasso_v4_corrected",
+  "model_version": "4.0.0-lasso-v4-corrected-20260915T224356",
+  "model_type": "sklearn.pipeline.Pipeline (SimpleImputer[median] -> StandardScaler -> Lasso), predicts DELTA",
+  "artifact_file": "models/regression_Lasso_v4_corrected.joblib",
+  "training_date": "2026-09-15T22:43:56+00:00",
+  "trained_by": "train_v4_corrected.py",
+  "target_variable": "delta_next_valeur_reference (target_next_valeur_reference - valeur_reference)",
+  "target_description": "Predicted change (drift) to the next REAL calibration campaign for the same instrument. target_next_valeur_reference is always the next REAL chronological observation - synthetic rows never redefine it.",
+  "prediction_mode": "delta_normalized_v2",
+  "prediction_unit": "UNKNOWN / REQUIRES CONFIRMATION - not recorded in the source ILA data.",
+  "feature_order": [
+    "pos_in_band",
+    "ewm_pos_in_band",
+    "recent_shift",
+    "rolling_trend",
+    "uncertainty_norm"
+  ],
+  "fitted_coefficients": {
+    "pos_in_band": -0.0,
+    "ewm_pos_in_band": -0.0,
+    "recent_shift": -0.4616564653998064,
+    "rolling_trend": 0.0,
+    "uncertainty_norm": 0.0
+  },
+  "fitted_intercept": -0.280542630169896,
+  "training_dataset": "data/processed/ILA_train_augmente_features.csv (real TRAIN instruments + safe noise-augmented copies only - TEST instruments never included)",
+  "cv_strategy_reference": "GroupShuffleSplit by instrument (80/20) for train/test; GroupKFold (5-fold, fold-safe augmentation) on TRAIN instruments only for alpha selection.",
+  "n_real_training_rows": 655,
+  "n_augmented_training_rows": 1896,
+  "n_training_rows": 2551,
+  "n_instruments_total": 22,
+  "held_out_test_evaluation": [
+    {
+      "model": "Baseline_no_drift",
+      "MAE": 0.999302325581395,
+      "RMSE": 1.4107815745758765,
+      "R2": 0.9991952984040379,
+      "n_test_rows": 86
+    },
+    {
+      "model": "RealOnly_Lasso",
+      "MAE": 1.6403326824072444,
+      "RMSE": 1.9380713903997222,
+      "R2": 0.9984813599608249,
+      "n_test_rows": 86
+    },
+    {
+      "model": "Real_Plus_Augmented_Lasso_v4_DEPLOYED",
+      "MAE": 0.9443339250976931,
+      "RMSE": 1.2909513781777044,
+      "R2": 0.9993261936868324,
+      "n_test_rows": 86
+    }
+  ],
+  "known_limitations": [
+    "On this specific instrument-holdout split, real+augmented beat the persistence baseline. Across 10 independent random instrument splits, augmentation beat baseline in only 3/10 cases, and the mean MAE across splits was not lower for real+augmented than for baseline. Consistent with train_v3_augmented.py's and experiments/audit_v3/FINAL_REPORT.md's prior findings: this dataset's real drift signal is small relative to measurement uncertainty at ~30 rows/instrument, and augmentation does not reliably outperform simple persistence. This is reported as-is, not adjusted to look better."
+  ],
+  "evaluation_metrics_groupkfold": {
+    "note": "This model uses an instrument-holdout train/test split (GroupShuffleSplit), not GroupKFold, as its primary evaluation - key kept as evaluation_metrics_groupkfold for schema compatibility with src/api/services/prediction_service.py, which reads this exact path for the beats_baseline gate.",
+    "held_out_test_MAE": 0.9443339250976931,
+    "baseline_persistence_MAE_for_comparison": 0.999302325581395,
+    "beats_baseline_on_this_split": true,
+    "beats_baseline": false,
+    "beats_baseline_honest_note": "Set to False (not the single-split result) because a 10-independent-split robustness check found augmentation beats the persistence baseline in only 3/10 cases and does not reliably outperform it on average - see reports/quality/v4_robustness_across_seeds.csv. The single held-out split above happened to favor augmentation, but that is not treated as the deployable claim."
+  }
+}

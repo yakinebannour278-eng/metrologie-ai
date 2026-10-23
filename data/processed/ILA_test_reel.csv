@@ -1,0 +1,92 @@
+﻿id_instrument,lab,annee,point,consigne,valeur_reference,incertitude,EMT_basse,EMT_haute,min,max,conforme,lab_original,lab_clean,point_numeric,point_label,point_type,consigne_missing,emt_missing,conforme_recomputed,outlier_iqr_valeur_reference,outlier_zscore_per_instrument,chrono_rank_in_instrument
+INST-03B-CHAMBREDEFERMENTATION,lab 03B,2020,1,,24.1,0.07,24.0,26.0,24.03,24.17,conforme,lab 03B,lab03b,1.0,,numeric,True,False,False,False,False,0
+INST-03B-CHAMBREDEFERMENTATION,lab 03B,2020,2,,24.0,0.07,24.0,26.0,23.93,24.07,non conforme,lab 03B,lab03b,2.0,,numeric,True,False,False,False,False,1
+INST-03B-CHAMBREDEFERMENTATION,lab 03B,2021,1,,24.08,0.2,24.0,26.0,23.88,24.28,non conforme,lab 03B,lab03b,1.0,,numeric,True,False,False,False,False,2
+INST-03B-CHAMBREDEFERMENTATION,lab 03B,2021,2,,23.81,0.2,24.0,26.0,23.61,24.01,non conforme,lab 03B,lab03b,2.0,,numeric,True,False,False,False,False,3
+INST-03B-CHAMBREDEFERMENTATION,lab 03B,2022,1,,24.08,0.2,24.0,26.0,23.88,24.28,non conforme,lab 03B,lab03b,1.0,,numeric,True,False,False,False,False,4
+INST-03B-CHAMBREDEFERMENTATION,lab 03B,2022,2,,23.81,0.2,24.0,26.0,23.61,24.01,non conforme,lab 03B,lab03b,2.0,,numeric,True,False,False,False,False,5
+INST-03B-CHAMBREDEFERMENTATION,lab 03B,2023,1,,24.5,0.2,24.0,26.0,24.3,24.7,conforme,lab 03B,lab03b,1.0,,numeric,True,False,False,False,False,6
+INST-03B-CHAMBREDEFERMENTATION,lab 03B,2023,2,,24.6,0.2,24.0,26.0,24.4,24.8,conforme,lab 03B,lab03b,2.0,,numeric,True,False,False,False,False,7
+INST-03B-CHAMBREDEFERMENTATION,lab 03B,2024,1,,24.5,0.2,24.0,26.0,24.3,24.7,conforme,lab 03B,lab03b,1.0,,numeric,True,False,False,False,False,8
+INST-03B-CHAMBREDEFERMENTATION,lab 03B,2024,2,,24.6,0.2,24.0,26.0,24.4,24.8,conforme,lab 03B,lab03b,2.0,,numeric,True,False,False,False,False,9
+INST-03B-CHAMBREDEFERMENTATION,lab 03B-2025,2025,1,,24.9,0.2,24.0,26.0,24.7,25.1,conforme,lab 03B-2025,lab03b,1.0,,numeric,True,False,False,False,False,10
+INST-03B-CHAMBREDEFERMENTATION,lab 03B-2025,2025,2,,24.7,0.2,24.0,26.0,24.5,24.9,conforme,lab 03B-2025,lab03b,2.0,,numeric,True,False,False,False,False,11
+INST-03B-PETRIN,lab 03B,2020,1,,24.0,0.07,23.0,25.0,23.93,24.07,conforme,lab 03B,lab03b,1.0,,numeric,True,False,False,False,False,0
+INST-03B-PETRIN,lab 03B,2021,1,,23.83,0.2,23.0,25.0,23.63,24.03,conforme,lab 03B,lab03b,1.0,,numeric,True,False,False,False,False,1
+INST-03B-PETRIN,lab 03B,2022,1,,23.83,0.2,23.0,25.0,23.63,24.03,conforme,lab 03B,lab03b,1.0,,numeric,True,False,False,False,False,2
+INST-03B-PETRIN,lab 03B,2023,1,,24.2,0.2,23.0,25.0,24.0,24.4,conforme,lab 03B,lab03b,1.0,,numeric,True,False,False,False,False,3
+INST-03B-PETRIN,lab 03B,2024,1,,24.2,0.2,23.0,25.0,24.0,24.4,conforme,lab 03B,lab03b,1.0,,numeric,True,False,False,False,False,4
+INST-03B-PETRIN,lab 03B-2025,2025,1,,24.1,0.2,23.0,25.0,23.9,24.3,conforme,lab 03B-2025,lab03b,1.0,,numeric,True,False,False,False,False,5
+INST-153A,Lab 153-A,2025,1,9.9,9.2,0.35,,,8.85,9.55,,Lab 153-A,lab153a,1.0,,numeric,False,True,False,False,False,0
+INST-153A,Lab 153-A,2025,2,9.9,9.3,0.37,,,8.930000000000001,9.67,,Lab 153-A,lab153a,2.0,,numeric,False,True,False,False,False,1
+INST-153A,Lab 153-A,2025,3,9.9,9.3,0.36,,,8.940000000000001,9.66,,Lab 153-A,lab153a,3.0,,numeric,False,True,False,False,False,2
+INST-153A,Lab 153-A,2025,4,9.9,9.1,0.36,,,8.74,9.46,,Lab 153-A,lab153a,4.0,,numeric,False,True,False,False,False,3
+INST-153A,Lab 153-A,2025,5,9.9,9.3,0.38,,,8.92,9.68,,Lab 153-A,lab153a,5.0,,numeric,False,True,False,False,False,4
+INST-19D-CONFORMITE,lab19D,2022,1,36.7,37.05,0.88,36.0,38.0,36.17,37.93000000000001,conforme,lab19D,lab19d,1.0,,numeric,False,False,False,False,False,0
+INST-19D-CONFORMITE,lab19D,2022,2,36.7,37.080000000000005,0.85,36.0,38.0,36.23,37.93000000000001,conforme,lab19D,lab19d,2.0,,numeric,False,False,False,False,False,1
+INST-19D-CONFORMITE,lab19D,2022,3,36.7,37.24,0.87,36.0,38.0,36.370000000000005,38.11,non conforme,lab19D,lab19d,3.0,,numeric,False,False,False,False,False,2
+INST-19D-CONFORMITE,lab19D,2022,4,36.7,37.09,0.88,36.0,38.0,36.21,37.970000000000006,conforme,lab19D,lab19d,4.0,,numeric,False,False,False,False,False,3
+INST-19D-CONFORMITE,lab19D,2022,5,36.7,37.16,0.89,36.0,38.0,36.27,38.05,non conforme,lab19D,lab19d,5.0,,numeric,False,False,False,False,False,4
+INST-19D-CONFORMITE,lab19D,2022,6,36.7,36.89,0.88,36.0,38.0,36.01,37.77,conforme,lab19D,lab19d,6.0,,numeric,False,False,False,False,False,5
+INST-19D-CONFORMITE,lab19D,2022,7,36.7,36.81,0.89,36.0,38.0,35.92,37.7,non conforme,lab19D,lab19d,7.0,,numeric,False,False,False,False,False,6
+INST-19D-CONFORMITE,lab19D,2022,8,36.7,36.77,0.88,36.0,38.0,35.89,37.650000000000006,non conforme,lab19D,lab19d,8.0,,numeric,False,False,False,False,False,7
+INST-19D-CONFORMITE,lab19D,2022,9,36.7,36.89,0.87,36.0,38.0,36.02,37.76,conforme,lab19D,lab19d,9.0,,numeric,False,False,False,False,False,8
+INST-47A,lab 47a,2020,1.0,,131.0,1.82,130.0,133.0,129.18,132.82,non conforme,lab 47a,lab47a,1.0,,numeric,True,False,False,False,False,0
+INST-47A,lab 47a,2020,2.0,,132.8,0.51,130.0,133.0,132.29,133.31,non conforme,lab 47a,lab47a,2.0,,numeric,True,False,False,False,False,1
+INST-47A,lab 47a,2020,3.0,,131.1,0.42,130.0,133.0,130.68,131.52,conforme,lab 47a,lab47a,3.0,,numeric,True,False,False,False,False,2
+INST-47A,lab 47a,2020,4.0,,130.9,0.87,130.0,133.0,130.03,131.77,conforme,lab 47a,lab47a,4.0,,numeric,True,False,False,False,False,3
+INST-47A,lab 47a,2020,5.0,,132.4,0.47,130.0,133.0,131.93,132.87,conforme,lab 47a,lab47a,5.0,,numeric,True,False,False,False,False,4
+INST-47A,lab 47a,2020,6.0,,131.9,1.48,130.0,133.0,130.42,133.38,non conforme,lab 47a,lab47a,6.0,,numeric,True,False,False,False,False,5
+INST-47A,lab 47a,2020,7.0,,131.7,0.57,130.0,133.0,131.13,132.27,conforme,lab 47a,lab47a,7.0,,numeric,True,False,False,False,False,6
+INST-47A,lab 47a,2020,8.0,,132.0,1.51,130.0,133.0,130.49,133.51,non conforme,lab 47a,lab47a,8.0,,numeric,True,False,False,False,False,7
+INST-47A,lab 47a,2020,9.0,,135.1,0.61,130.0,133.0,134.49,135.71,non conforme,lab 47a,lab47a,9.0,,numeric,True,False,False,False,False,8
+INST-47A,lab 47a,2020,10.0,,135.5,1.53,130.0,133.0,133.97,137.03,non conforme,lab 47a,lab47a,10.0,,numeric,True,False,False,False,True,9
+INST-47A,lab 47a,2021,1,,133.2,0.4,130.0,133.0,132.79999999999998,133.6,non conforme,lab 47a,lab47a,1.0,,numeric,True,False,False,False,False,10
+INST-47A,lab 47a,2021,2,,132.2,0.41,130.0,133.0,131.79,132.61,conforme,lab 47a,lab47a,2.0,,numeric,True,False,False,False,False,11
+INST-47A,lab 47a,2021,3,,131.0,0.4,130.0,133.0,130.6,131.4,conforme,lab 47a,lab47a,3.0,,numeric,True,False,False,False,False,12
+INST-47A,lab 47a,2021,4,,131.5,0.43,130.0,133.0,131.07,131.93,conforme,lab 47a,lab47a,4.0,,numeric,True,False,False,False,False,13
+INST-47A,lab 47a,2021,5,,128.6,0.38,130.0,133.0,128.22,128.98,non conforme,lab 47a,lab47a,5.0,,numeric,True,False,False,False,False,14
+INST-47A,lab 47a,2021,6,,133.1,0.44,130.0,133.0,132.66,133.54,non conforme,lab 47a,lab47a,6.0,,numeric,True,False,False,False,False,15
+INST-47A,lab 47a,2021,7,,132.2,0.42,130.0,133.0,131.78,132.61999999999998,conforme,lab 47a,lab47a,7.0,,numeric,True,False,False,False,False,16
+INST-47A,lab 47a,2021,8,,131.5,0.39,130.0,133.0,131.11,131.89,conforme,lab 47a,lab47a,8.0,,numeric,True,False,False,False,False,17
+INST-47A,lab 47a,2021,9,,129.5,0.39,130.0,133.0,129.11,129.89,non conforme,lab 47a,lab47a,9.0,,numeric,True,False,False,False,False,18
+INST-47A,lab 47a,2021,10,,131.4,0.76,130.0,133.0,130.64,132.16,conforme,lab 47a,lab47a,10.0,,numeric,True,False,False,False,False,19
+INST-47A,lab 47a,2022,1,132.8,132.7,0.4,130.0,133.0,132.29999999999998,133.1,non conforme,lab 47a,lab47a,1.0,,numeric,False,False,False,False,False,20
+INST-47A,lab 47a,2022,2,132.8,130.7,0.37,130.0,133.0,130.32999999999998,131.07,conforme,lab 47a,lab47a,2.0,,numeric,False,False,False,False,False,21
+INST-47A,lab 47a,2022,3,132.8,131.8,0.37,130.0,133.0,131.37,132.23000000000002,conforme,lab 47a,lab47a,3.0,,numeric,False,False,False,False,False,22
+INST-47A,lab 47a,2022,4,132.8,133.1,0.43,130.0,133.0,132.69,133.51,non conforme,lab 47a,lab47a,4.0,,numeric,False,False,False,False,False,23
+INST-47A,lab 47a,2022,5,132.8,131.3,0.41,130.0,133.0,130.91000000000005,131.69,conforme,lab 47a,lab47a,5.0,,numeric,False,False,False,False,False,24
+INST-47A,lab 47a,2022,6,132.8,130.4,0.39,130.0,133.0,130.02,130.78,conforme,lab 47a,lab47a,6.0,,numeric,False,False,False,False,False,25
+INST-47A,lab 47a,2022,7,132.8,130.8,0.38,130.0,133.0,130.42000000000002,131.18,conforme,lab 47a,lab47a,7.0,,numeric,False,False,False,False,False,26
+INST-47A,lab 47a,2022,8,132.8,128.5,0.38,130.0,133.0,128.06,128.94,non conforme,lab 47a,lab47a,8.0,,numeric,False,False,False,False,False,27
+INST-47A,lab 47a,2022,9,132.8,130.4,0.44,130.0,133.0,130.04,130.76000000000002,conforme,lab 47a,lab47a,9.0,,numeric,False,False,False,False,False,28
+INST-47A,lab 47a,2022,10,132.8,129.8,0.36,130.0,133.0,129.8,129.8,non conforme,lab 47a,lab47a,10.0,,numeric,False,False,False,False,False,29
+INST-47A,lab 47a,2023,1,135.0,129.9,0.36,130.0,133.0,129.54,130.26000000000002,non conforme,lab 47a,lab47a,1.0,,numeric,False,False,False,False,False,30
+INST-47A,lab 47a,2023,2,135.0,131.7,0.37,130.0,133.0,131.32999999999998,132.07,conforme,lab 47a,lab47a,2.0,,numeric,False,False,False,False,False,31
+INST-47A,lab 47a,2023,3,135.0,129.5,0.37,130.0,133.0,129.13,129.87,non conforme,lab 47a,lab47a,3.0,,numeric,False,False,False,False,False,32
+INST-47A,lab 47a,2023,4,135.0,131.5,0.37,130.0,133.0,131.13,131.87,conforme,lab 47a,lab47a,4.0,,numeric,False,False,False,False,False,33
+INST-47A,lab 47a,2023,5,135.0,130.5,0.37,130.0,133.0,130.14,130.86,conforme,lab 47a,lab47a,5.0,,numeric,False,False,False,False,False,34
+INST-47A,lab 47a,2023,6,135.0,130.7,0.36,130.0,133.0,130.32999999999998,131.07,conforme,lab 47a,lab47a,6.0,,numeric,False,False,False,False,False,35
+INST-47A,lab 47a,2023,7,135.0,132.3,0.37,130.0,133.0,131.93,132.67000000000002,conforme,lab 47a,lab47a,7.0,,numeric,False,False,False,False,False,36
+INST-47A,lab 47a,2023,8,135.0,133.5,0.37,130.0,133.0,133.14,133.86,non conforme,lab 47a,lab47a,8.0,,numeric,False,False,False,False,False,37
+INST-47A,lab 47a,2023,9,135.0,129.4,0.36,130.0,133.0,129.03,129.77,non conforme,lab 47a,lab47a,9.0,,numeric,False,False,False,False,False,38
+INST-47A,lab 47a,2023,10,135.0,130.0,0.37,130.0,133.0,130.0,130.0,non conforme,lab 47a,lab47a,10.0,,numeric,False,False,False,False,False,39
+INST-47A,lab 47a,2024,2,135.0,131.7,0.37,130.0,133.0,131.32999999999998,132.07,conforme,lab 47a,lab47a,2.0,,numeric,False,False,False,False,False,40
+INST-47A,lab 47a,2024,3,135.0,129.5,0.37,130.0,133.0,129.13,129.87,non conforme,lab 47a,lab47a,3.0,,numeric,False,False,False,False,False,41
+INST-47A,lab 47a,2024,4,135.0,131.5,0.37,130.0,133.0,131.13,131.87,conforme,lab 47a,lab47a,4.0,,numeric,False,False,False,False,False,42
+INST-47A,lab 47a,2024,5,135.0,130.5,0.37,130.0,133.0,130.14,130.86,conforme,lab 47a,lab47a,5.0,,numeric,False,False,False,False,False,43
+INST-47A,lab 47a,2024,6,135.0,130.7,0.36,130.0,133.0,130.32999999999998,131.07,conforme,lab 47a,lab47a,6.0,,numeric,False,False,False,False,False,44
+INST-47A,lab 47a,2024,7,135.0,132.3,0.37,130.0,133.0,131.93,132.67000000000002,conforme,lab 47a,lab47a,7.0,,numeric,False,False,False,False,False,45
+INST-47A,lab 47a,2024,8,135.0,133.5,0.37,130.0,133.0,133.14,133.86,non conforme,lab 47a,lab47a,8.0,,numeric,False,False,False,False,False,46
+INST-47A,lab 47a,2024,9,135.0,129.4,0.36,130.0,133.0,129.03,129.77,non conforme,lab 47a,lab47a,9.0,,numeric,False,False,False,False,False,47
+INST-47A,lab 47a,2024,10,135.0,130.0,0.37,130.0,133.0,130.0,130.0,non conforme,lab 47a,lab47a,10.0,,numeric,False,False,False,False,False,48
+INST-47A,lab 47A-2025,2025,1,132.4,132.2,0.44,130.0,133.0,131.76,132.64,conforme,lab 47A-2025,lab47a,1.0,,numeric,False,False,False,False,False,49
+INST-47A,lab 47A-2025,2025,2,132.4,131.6,0.4,130.0,133.0,131.2,132.0,conforme,lab 47A-2025,lab47a,2.0,,numeric,False,False,False,False,False,50
+INST-47A,lab 47A-2025,2025,3,132.4,130.6,0.39,130.0,133.0,130.23,130.98999999999998,conforme,lab 47A-2025,lab47a,3.0,,numeric,False,False,False,False,False,51
+INST-47A,lab 47A-2025,2025,4,132.4,130.5,0.37,130.0,133.0,130.1,130.87,conforme,lab 47A-2025,lab47a,4.0,,numeric,False,False,False,False,False,52
+INST-47A,lab 47A-2025,2025,5,132.4,132.0,0.4,130.0,133.0,131.63,132.4,conforme,lab 47A-2025,lab47a,5.0,,numeric,False,False,False,False,False,53
+INST-47A,lab 47A-2025,2025,6,132.4,130.9,0.37,130.0,133.0,130.52,131.27,conforme,lab 47A-2025,lab47a,6.0,,numeric,False,False,False,False,False,54
+INST-47A,lab 47A-2025,2025,7,132.4,131.8,0.38,130.0,133.0,131.42000000000002,132.18,conforme,lab 47A-2025,lab47a,7.0,,numeric,False,False,False,False,False,55
+INST-47A,lab 47A-2025,2025,8,132.4,130.7,0.38,130.0,133.0,130.31,131.07999999999998,conforme,lab 47A-2025,lab47a,8.0,,numeric,False,False,False,False,False,56
+INST-47A,lab 47A-2025,2025,9,132.4,131.1,0.39,130.0,133.0,130.73,131.48999999999998,conforme,lab 47A-2025,lab47a,9.0,,numeric,False,False,False,False,False,57
+INST-47A,lab 47A-2025,2025,10,132.4,129.2,0.37,130.0,133.0,129.2,129.57,non conforme,lab 47A-2025,lab47a,10.0,,numeric,False,False,False,False,False,58

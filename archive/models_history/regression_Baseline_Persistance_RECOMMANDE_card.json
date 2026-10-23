@@ -1,0 +1,20 @@
+{
+  "model_name": "Baseline_Persistance",
+  "role": "RECOMMANDATION OPERATIONNELLE ACTUELLE (meilleur MAE toutes categories, GroupKFold)",
+  "avertissement": "Ce modele bat tous les modeles appris sur ce volume de donnees. A reevaluer regulierement a mesure que l'historique par instrument grandit.",
+  "target": "target_next_valeur_reference",
+  "metrics_groupkfold": {
+    "MAE": 1.952733829628102,
+    "RMSE": 15.787191650881457,
+    "MedAE": 0.35399999999999726,
+    "R2": 0.45692303315217,
+    "explained_variance": 0.4605432991373551,
+    "MAPE_pct": 4.500727732382731,
+    "directional_accuracy_pct": 0.0,
+    "accord_conformite_pct": 92.54298060126874,
+    "faux_negatifs_derive": 6.0,
+    "faux_positifs_derive": 5.0
+  },
+  "trained_at": "2026-08-23T00:05:33",
+  "source_dataset": "data/processed/ILA_features_selected.csv"
+}

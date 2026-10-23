@@ -1,0 +1,63 @@
+Train: 17 instruments / 672 rows | Test: 5 instruments / 91 rows (held out)
+Supervised: train=655, test=86
+ILA_train_augmente_features.csv (actual training table): (2551, 38)
+Chronological diagnostic split (within TRAIN instruments, no shuffling): 518 chrono-train rows / 137 chrono-val rows
+
+Baseline (no-drift persistence) held-out test MAE = 0.9993
+RandomForestRegressor_tuned: hyperparameter search done in 33.8s, best_params={'model__max_depth': 3, 'model__min_samples_leaf': 1, 'model__n_estimators': 100}
+ExtraTreesRegressor_tuned: hyperparameter search done in 13.4s, best_params={'model__max_depth': None, 'model__min_samples_leaf': 5, 'model__n_estimators': 100}
+GradientBoostingRegressor_tuned: hyperparameter search done in 4.3s, best_params={'model__learning_rate': 0.03, 'model__max_depth': 3, 'model__n_estimators': 50}
+
+Total algorithms to benchmark: 18
+NOTE: xgboost / lightgbm / catboost are NOT installed in this sandbox and there is no network access to install them - they are excluded from this benchmark (not faked).
+DummyRegressor_mean                 MAE=  1.0598  RMSE=  1.4358  R2= 0.99917  Bias= -0.2671  beats_baseline=False  uses_features=True  time=0.004s
+LinearRegression                    MAE=  0.9409  RMSE=  1.2585  R2= 0.99936  Bias= -0.1613  beats_baseline=True  uses_features=True  time=0.004s
+Ridge                               MAE=  0.9409  RMSE=  1.2584  R2= 0.99936  Bias= -0.1613  beats_baseline=True  uses_features=True  time=0.004s
+Lasso                               MAE=  0.9443  RMSE=  1.2910  R2= 0.99933  Bias= -0.2753  beats_baseline=True  uses_features=True  time=0.004s
+ElasticNet                          MAE=  0.9291  RMSE=  1.2596  R2= 0.99936  Bias= -0.2495  beats_baseline=True  uses_features=True  time=0.004s
+HuberRegressor                      MAE=  0.8942  RMSE=  1.2528  R2= 0.99937  Bias=  0.0937  beats_baseline=True  uses_features=True  time=0.007s
+KNeighborsRegressor                 MAE=  1.3674  RMSE=  1.8654  R2= 0.99859  Bias= -0.1073  beats_baseline=False  uses_features=True  time=0.004s
+SVR_rbf                             MAE=  1.0449  RMSE=  1.4530  R2= 0.99915  Bias= -0.0833  beats_baseline=False  uses_features=True  time=0.172s
+DecisionTreeRegressor               MAE=  2.8300  RMSE=  8.5827  R2= 0.97022  Bias= -1.8518  beats_baseline=False  uses_features=True  time=0.008s
+RandomForestRegressor               MAE=  2.9385  RMSE=  8.6754  R2= 0.96957  Bias= -1.8513  beats_baseline=False  uses_features=True  time=1.736s
+ExtraTreesRegressor                 MAE=  2.9284  RMSE=  8.6091  R2= 0.97003  Bias= -1.8921  beats_baseline=False  uses_features=True  time=0.858s
+GradientBoostingRegressor           MAE=  2.7544  RMSE=  8.2301  R2= 0.97261  Bias= -1.7816  beats_baseline=False  uses_features=True  time=0.270s
+HistGradientBoostingRegressor       MAE=  2.9074  RMSE=  8.4109  R2= 0.97140  Bias= -1.7761  beats_baseline=False  uses_features=True  time=0.131s
+AdaBoostRegressor                   MAE=  4.1191  RMSE= 14.4679  R2= 0.91537  Bias= -2.8946  beats_baseline=False  uses_features=True  time=0.019s
+BaggingRegressor                    MAE=  3.9953  RMSE= 13.3607  R2= 0.92783  Bias= -2.9310  beats_baseline=False  uses_features=True  time=0.089s
+RandomForestRegressor_tuned         MAE=  2.7286  RMSE=  8.4231  R2= 0.97131  Bias= -1.6526  beats_baseline=False  uses_features=True  time=0.237s
+ExtraTreesRegressor_tuned           MAE=  2.3509  RMSE=  6.2933  R2= 0.98399  Bias= -1.3643  beats_baseline=False  uses_features=True  time=0.188s
+GradientBoostingRegressor_tuned     MAE=  2.3206  RMSE=  6.7581  R2= 0.98153  Bias= -1.4018  beats_baseline=False  uses_features=True  time=0.144s
+
+==================================================================================================================================
+FULL BENCHMARK RESULTS (sorted by held-out test MAE, real untouched test set)
+==================================================================================================================================
+ rank                           model      MAE      RMSE       R2    MedAE      Bias  beats_baseline  CV_MAE_GroupKFold  train_time_sec
+    1                  HuberRegressor 0.894160  1.252782 0.999365 0.568087  0.093651            True           1.213530        0.007048
+    2                      ElasticNet 0.929091  1.259630 0.999358 0.530415 -0.249530            True           1.306129        0.003513
+    3                           Ridge 0.940870  1.258379 0.999360 0.608423 -0.161311            True           1.332293        0.003610
+    4                LinearRegression 0.940896  1.258461 0.999360 0.608503 -0.161346            True           1.332394        0.003760
+    5                           Lasso 0.944334  1.290951 0.999326 0.506694 -0.275264            True           1.323676        0.003714
+    0   Baseline_no_drift_persistence 0.999302  1.410782 0.999195 0.645000  0.013488           False                NaN        0.000000
+    6                         SVR_rbf 1.044948  1.453043 0.999146 0.651376 -0.083264           False           1.277728        0.172488
+    7             DummyRegressor_mean 1.059762  1.435772 0.999167 0.700000 -0.267054           False           1.479294        0.003685
+    8             KNeighborsRegressor 1.367429  1.865432 0.998593 1.023341 -0.107325           False           1.550366        0.004223
+    9 GradientBoostingRegressor_tuned 2.320633  6.758147 0.981534 0.650000 -1.401833           False           1.250646        0.144299
+   10       ExtraTreesRegressor_tuned 2.350882  6.293292 0.983987 0.887699 -1.364317           False           1.362357        0.188333
+   11     RandomForestRegressor_tuned 2.728602  8.423061 0.971315 0.716449 -1.652600           False           1.293225        0.237462
+   12       GradientBoostingRegressor 2.754440  8.230106 0.972614 0.663159 -1.781569           False           1.361083        0.269990
+   13           DecisionTreeRegressor 2.829998  8.582666 0.970218 0.700521 -1.851822           False           1.426835        0.007562
+   14   HistGradientBoostingRegressor 2.907397  8.410929 0.971398 0.834876 -1.776070           False           1.359624        0.130930
+   15             ExtraTreesRegressor 2.928412  8.609070 0.970034 0.958999 -1.892095           False           1.380444        0.858397
+   16           RandomForestRegressor 2.938501  8.675387 0.969571 1.075169 -1.851349           False           1.368896        1.735676
+   17                BaggingRegressor 3.995264 13.360741 0.927827 0.921383 -2.930963           False           1.393872        0.088568
+   18               AdaBoostRegressor 4.119140 14.467876 0.915370 0.704245 -2.894635           False           1.429958        0.018729
+
+Models beating baseline on held-out test: 5 / 18
+
+Best learned model by held-out test MAE: HuberRegressor
+
+Robustness (HuberRegressor vs baseline, 10 independent instrument splits): beats baseline in 7/10 splits
+Mean baseline MAE=2.4593 | Mean HuberRegressor MAE=2.4344
+
+OBJECTIVE FINAL DECISION (robustness-checked, not single-split): HuberRegressor

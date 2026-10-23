@@ -1,0 +1,69 @@
+# =============================================================================
+# config.yaml — Single source of truth for paths and domain parameters.
+# No notebook or script should hardcode a path or a business threshold:
+# everything is read from here.
+# =============================================================================
+
+project:
+  name: "AI Pipeline for Drift Prediction and Anomaly Detection in Metrological Instruments"
+  client: "L'Épi d'Or"
+  standard: "ISO/IEC 17025"
+
+paths:
+  data_raw: "data/raw"
+  data_interim: "data/interim"
+  data_processed: "data/processed"
+  reports: "reports"
+  reports_figures: "reports/figures"
+  reports_data_dictionary: "reports/data_dictionary"
+  reports_quality: "reports/quality"
+  models: "models"
+  logs: "logs"
+
+# Core schema expected in the organized metrology dataset.
+# Used by the automatic dataset-discovery logic (never hardcode a filename).
+expected_columns:
+  - id_instrument
+  - lab
+  - annee
+  - point
+  - consigne
+  - valeur_reference
+  - incertitude
+  - EMT_basse
+  - EMT_haute
+  - min
+  - max
+  - conforme
+
+# Filename keyword patterns used to classify candidate CSVs during
+# automatic discovery, so metadata/log/audit files are never mistaken
+# for the actual measurement dataset.
+dataset_discovery:
+  exclude_keywords: ["log", "tracabilite", "audit", "exclu"]
+  split_keywords: ["train", "test", "augmente"]
+
+# Business/metrology thresholds used only for plausibility checks in the
+# quality report (NOT used to silently alter data).
+plausibility:
+  min_year: 2000
+  max_year: 2035
+  uncertainty_must_be_positive: true
+  emt_basse_must_be_lower_than_emt_haute: true
+  min_must_be_lower_than_max: true
+
+# FastAPI microservice: which trained artifact to load and where to persist
+# local prediction history. Produced by notebooks/05_Regression_Model.ipynb.
+# Never hardcode these paths in application code — read them from here.
+api:
+  model_file: "models/regression_active_model.joblib"
+  model_metadata_file: "models/metadata.json"
+  training_features_file: "data/processed/ILA_train_augmente_features.csv"
+  database_path: "data/metrology_ai.db"
+  # ONE active model, selected objectively from an 18-algorithm benchmark (see
+  # notebooks/05_Regression_Model.ipynb section 16 and
+  # reports/quality/full_algorithm_benchmark.csv) trained via the corrected lineage:
+  # ILA_cleaned.csv -> instrument split -> ILA_train_reel.csv/ILA_test_reel.csv ->
+  # safe feature engineering -> augmentation on TRAIN ONLY -> ILA_train_augmente.csv
+  # -> training. See AUDIT_REPORT.md, "Correction v4" and "Benchmark complet".
+  # All prior versioned/superseded artifacts are in archive/ - not deleted, not active.

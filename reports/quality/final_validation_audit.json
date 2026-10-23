@@ -1,0 +1,11 @@
+{
+  "no_leakage_detected": true,
+  "split_disjoint_by_instrument": true,
+  "reproducible": true,
+  "test_MAE_seed42": 0.8941596904014967,
+  "robustness_wins": "7/10",
+  "robustness_mean_MAE_huber": 2.434447429585167,
+  "robustness_mean_MAE_baseline": 2.4593498462252126,
+  "effect_size_honest_assessment": "real but modest (~1% mean MAE improvement, 7/10 split win rate)",
+  "recommendation": "KEEP HuberRegressor as active model - no leakage found, robustness check (not just single split) supports it, but the margin over baseline is modest and should be monitored, not oversold as a dramatic improvement."
+}

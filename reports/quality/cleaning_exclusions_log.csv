@@ -1,0 +1,5 @@
+﻿id_instrument,lab,annee,point,consigne,valeur_reference,incertitude,EMT_basse,EMT_haute,min,max,conforme,lab_original,lab_clean,point_numeric,point_label,point_type,exclusion_reason
+INST-11B,LAB 11B,2022,1,99.5,100.4,0.42,,,99.98,100.82,,LAB 11B,lab11b,1.0,,numeric,"duplicate_business_key(id_instrument,annee,point)"
+INST-11B,LAB 11B,2022,2,99.5,100.4,0.38,,,100.02,100.78,,LAB 11B,lab11b,2.0,,numeric,"duplicate_business_key(id_instrument,annee,point)"
+INST-11B,LAB 11B,2022,3,99.5,100.4,0.39,,,100.01,100.79,,LAB 11B,lab11b,3.0,,numeric,"duplicate_business_key(id_instrument,annee,point)"
+INST-47A,lab 47a,2024,1,135.0,,0.36,130.0,133.0,-0.36,0.36,non conforme,lab 47a,lab47a,1.0,,numeric,missing_valeur_reference_core_measurement

@@ -1,0 +1,32 @@
+{
+  "model_name": "Lasso_v2_normalized",
+  "model_type": "sklearn.pipeline.Pipeline (SimpleImputer[median] -> StandardScaler -> Lasso, predicts DELTA)",
+  "trained_at": "2026-09-01T11:45:31+00:00",
+  "features": [
+    "pos_in_band",
+    "ewm_pos_in_band",
+    "recent_shift",
+    "rolling_trend",
+    "uncertainty_norm"
+  ],
+  "target": "delta = target_next_valeur_reference - valeur_reference (final prediction = valeur_reference + predicted_delta)",
+  "hyperparameters": {
+    "alpha": 1.0,
+    "random_state": 42,
+    "max_iter": 5000
+  },
+  "n_training_rows": 741,
+  "n_instruments": 22,
+  "metrics_groupkfold": {
+    "MAE": 2.768734300795273,
+    "RMSE": 33.228872182356376,
+    "MedAE": 1.4640709459459451,
+    "R2": 0.9269752836148909,
+    "baseline_persistence_MAE_for_comparison": 1.9570715249662618,
+    "beats_baseline": false
+  },
+  "predecessor_model": "regression_Lasso.joblib (v1) - MAE ~5.0 on the same rows, using 12 collinear absolute-scale features",
+  "improvement_over_v1": "Real, verified: MAE reduced from ~5.0 (v1) to 2.769 (v2) - a 45% error reduction",
+  "honest_disclaimer": "This model does NOT beat the trivial persistence baseline (MAE 1.957). It is deployed because it is a genuine, substantial improvement over v1, not because it has been shown to add predictive value over doing nothing. See AUDIT_REPORT.md.",
+  "improvement_over_v1_CORRECTED": "MAE reduced from ~5.0 (v1) to 2.769 (v2) - real and verified, but the mechanism must be stated precisely: at alpha=1.0 (chosen by the honest GroupKFold search), ALL 5 feature coefficients are exactly zero - the model reduces to predicting a constant (the historical average drift, intercept=-1.188), mathematically identical to a naive 'always predict the average delta' baseline (verified: both give MAE=2.7687 exactly). At lower regularization (alpha=0.001), where the features are actually used, GroupKFold MAE is WORSE (2.83). Conclusion: the improvement comes from safely defaulting to a near-constant prediction rather than from v1's actively-harmful collinear features - not from genuinely learned per-instrument drift dynamics."
+}

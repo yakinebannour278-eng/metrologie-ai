@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+venv/
+.venv/
+*.egg-info/
+
+# Jupyter
+.jupyter/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs (kept locally, not versioned)
+logs/*.log
+
+# MLflow / model artifacts (large binary files)
+mlruns/
+models/*.pkl
+models/*.joblib
+
+# Environment secrets
+.env

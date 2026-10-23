@@ -1,0 +1,41 @@
+{
+  "model_name": "Lasso_v3_augmented",
+  "model_type": "sklearn.pipeline.Pipeline (SimpleImputer[median] -> StandardScaler -> Lasso), predicts DELTA, trained on real + noise-augmented data (matching src/data/augment_ila.py's exact noise model)",
+  "trained_at": "2026-09-10T13:15:22+00:00",
+  "features": [
+    "pos_in_band",
+    "ewm_pos_in_band",
+    "recent_shift",
+    "rolling_trend",
+    "uncertainty_norm"
+  ],
+  "target": "delta = target_next_valeur_reference - valeur_reference",
+  "hyperparameters": {
+    "alpha": 0.5,
+    "random_state": 42,
+    "max_iter": 5000
+  },
+  "n_real_training_rows": 741,
+  "n_augmented_training_rows": 1386,
+  "n_instruments": 22,
+  "metrics_groupkfold": {
+    "MAE": 2.1200999225820314,
+    "RMSE": 33.204428113384644,
+    "MedAE": 0.5552213715638139,
+    "R2": 0.9270826820627774,
+    "baseline_persistence_MAE_for_comparison": 1.9570715249662618,
+    "beats_baseline": false
+  },
+  "fitted_coefficients": {
+    "pos_in_band": -0.0,
+    "ewm_pos_in_band": -0.0,
+    "recent_shift": -0.4847764285982529,
+    "rolling_trend": 0.0,
+    "uncertainty_norm": 0.0
+  },
+  "fitted_intercept": -0.3137727006131014,
+  "predecessor_model": "regression_Lasso_v2_normalized.joblib - GroupKFold MAE 2.774 (real data only, all coefficients zero)",
+  "improvement_over_v2": "MAE 2.774 -> 2.120 under GroupKFold (24% error reduction), 1.601 -> 0.739 under chronological validation. Unlike v2, this model's coefficients are NOT all zero.",
+  "why_augmentation_helps_here": "A real, statistically significant regression-to-the-mean pattern exists in the real data alone (recent_shift vs target_delta: Pearson r=-0.368, p<0.000001, n=624 real training rows) - but Lasso cannot confidently assign it a non-zero coefficient from only ~36 rows/instrument (verified: real-only training collapses to all-zero coefficients, same failure mode as v2). Augmentation adds ~1100 additional (X,y) pairs built by perturbing each real row's CURRENT reading with noise ~ N(0, incertitude) - the instrument's own measurement uncertainty - while holding its real historical features and its real future outcome fixed. This reinforces the SAME real pattern rather than inventing a new one, letting the regularized model detect and use it.",
+  "honest_disclaimer": "This model does NOT beat the trivial persistence baseline (GroupKFold MAE 1.957; chronological MAE 0.522). It is the closest any tested approach has come, and the first with non-zero, mechanistically-verified coefficients rather than a collapsed constant - but it should still not be presented as outperforming simple persistence. See AUDIT_REPORT.md and experiments/audit_v3/FINAL_REPORT.md."
+}

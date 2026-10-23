@@ -1,0 +1,56 @@
+{
+  "model_name": "Lasso",
+  "role": "MODELE FINAL ACTIF (unique, deploye par l'API/Streamlit via config/config.yaml)",
+  "model_type": "sklearn.pipeline.Pipeline (SimpleImputer[median] -> StandardScaler -> Lasso), predit un DELTA",
+  "target": "target_next_valeur_reference (via target_delta = target_next_valeur_reference - valeur_reference)",
+  "features": [
+    "pos_in_band",
+    "ewm_pos_in_band",
+    "recent_shift",
+    "rolling_trend",
+    "uncertainty_norm"
+  ],
+  "fitted_coefficients": {
+    "pos_in_band": -0.0,
+    "ewm_pos_in_band": -0.0,
+    "recent_shift": -0.4616564653998064,
+    "rolling_trend": 0.0,
+    "uncertainty_norm": 0.0
+  },
+  "fitted_intercept": -0.280542630169896,
+  "hyperparameters": {
+    "alpha": 0.5,
+    "random_state": 42,
+    "max_iter": 5000
+  },
+  "n_real_training_rows": 655,
+  "n_augmented_training_rows": 1896,
+  "n_train_instruments": 17,
+  "n_test_instruments": 5,
+  "source_dataset": "data/processed/ILA_train_augmente_features.csv (train reel + copies augmentees sures ; TEST jamais inclus)",
+  "held_out_test_results": [
+    {
+      "model": "Baseline_no_drift",
+      "MAE": 0.999302325581395,
+      "RMSE": 1.4107815745758765,
+      "R2": 0.9991952984040379,
+      "n_test_rows": 86
+    },
+    {
+      "model": "RealOnly_Lasso",
+      "MAE": 1.6403326824072444,
+      "RMSE": 1.9380713903997222,
+      "R2": 0.9984813599608249,
+      "n_test_rows": 86
+    },
+    {
+      "model": "Real_Plus_Augmented_Lasso_DEPLOYED",
+      "MAE": 0.9443339250976931,
+      "RMSE": 1.2909513781777044,
+      "R2": 0.9993261936868324,
+      "n_test_rows": 86
+    }
+  ],
+  "trained_at": "2026-09-16T08:14:59",
+  "honest_disclaimer": "Sur ce split precis, reel+augmente bat la baseline de persistance. Sur 10 splits independants, l'augmentation bat la baseline dans 3/10 cas (MAE moyenne non inferieure a la baseline) - coherent avec experiments/audit_v3/FINAL_REPORT.md : sur ce volume de donnees (~30 lignes/instrument), aucune approche ne bat de facon fiable la persistance simple. Resultat rapporte tel quel, non force."
+}

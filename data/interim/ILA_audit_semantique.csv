@@ -1,0 +1,50 @@
+﻿lab,entete_colonne_assignee_valeur_reference,entete_colonne_assignee_consigne,entete_colonne_assignee_incertitude,nb_lignes,exemple_valeur_reference,exemple_consigne
+LAB 11B,T lue,,incertitude,6,1003.0,
+LAB 11B,valeur de réf ,valeur lue ,incertitude,16,100.9,100.0
+LAB 11B-2025,valeur de réf ,valeur lue ,incertitude,5,100.3,100.0
+LAB139,valeur de réf ,valeur lue ,incertitude,6,412.0,420.0
+LAB139-2025,valeur de réf ,valeur lue ,incertitude,3,415.0,420.0
+Lab 08A-2025,T° lue,indication ,incertitude,3,545.71,555.0
+Lab 08B-2025,T° lue,indication ,incertitude,3,549.64,555.0
+Lab 153-A,valeur de réf ,valeur lue ,incertitude,5,9.2,9.9
+lab 03B,Tlue,,incertitude,6,24.1,
+lab 03B,Tréf,,incertitude,9,24.08,
+lab 03B-2025,Tréf,,incertitude,3,24.9,
+lab 08A,T° lue,indication ,incertitude,15,549.1,560.0
+lab 08B,T° lue,indication ,incertitude,15,552.6,560.0
+lab 145,T° ref,,incertitude,18,30.1,
+lab 145,valeur de réf ,valeur lue ,incertitude,27,30.2,30.0
+lab 145-2025,valeur de réf ,valeur lue ,incertitude,9,30.2,30.0
+lab 19A,T° ref,,incertitude,18,37.7,
+lab 19A,valeur de réf ,valeur lue ,incertitude,27,41.8,42.0
+lab 19A-2025,valeur de réf ,valeur lue ,incertitude,9,41.6,42.4
+lab 19B,T° ref,,incertitude,18,44.7,
+lab 19B,valeur de réf ,valeur lue ,incertitude,27,43.9,41.1
+lab 19B-2025,valeur de réf ,valeur lue ,incertitude,9,44.5,44.2
+lab 19C,T° ref,,incertitude,9,41.58,
+lab 20B,T lue,,incertitude,10,45.3,
+lab 20B,valeur de réf ,valeur lue ,incertitude,15,45.0,45.0
+lab 20B-2025,valeur de réf ,valeur lue ,incertitude,5,44.8,45.0
+lab 47A-2025,T° ref,Tinducation,incertitude,10,132.2,132.4
+lab 47B-2025,T° ref,Tinducation,incertitude,10,132.2,132.3
+lab 47a,T° ref,Tinducation,incertitude,30,132.7,132.8
+lab 47a,T° ref,,incertitude,20,131.0,
+lab 47b,T° ref,Tinducation,incertitude,30,133.8,132.5
+lab 47b,T° ref,,incertitude,20,132.0,
+lab 62,T° ref,,incertitude,18,24.8,
+lab 62,valeur de réf ,valeur lue ,incertitude,27,24.7,25.0
+lab 62-2025,valeur de réf ,valeur lue ,incertitude,9,24.9,25.0
+lab 82,T° ref,,incertitude,18,3.8,
+lab 82,valeur de réf ,valeur lue ,incertitude,27,3.9,
+lab 82-2025,valeur de réf ,valeur lue ,incertitude,9,2.9,
+lab 83,T° ref,consigne ,incertitude,18,3.4,5.0
+lab 83,valeur de réf ,valeur lue ,incertitude,27,3.8,
+lab 83-2025,valeur de réf ,valeur lue ,incertitude,9,4.4,
+lab 83A cong,T° ref,consigne ,incertitude,18,-24.0,-20.0
+lab 83Acong,valeur de réf ,valeur lue ,incertitude,36,-21.1,-20.0
+lab 84,Tlue,,incertitude,18,173.3,
+lab 84,valeur de réf ,valeur lue ,incertitude,27,173.2,175.0
+lab 84-2025,valeur de réf ,valeur lue ,incertitude,9,169.3,170.0
+lab114-,valeur de réf ,valeur lue ,incertitude,36,2.9,5.0
+lab19D,valeur de réf ,valeur lue ,incertitude,36,37.35,37.0
+lab19D-2025,valeur de réf ,valeur lue ,incertitude,9,37.3,36.5

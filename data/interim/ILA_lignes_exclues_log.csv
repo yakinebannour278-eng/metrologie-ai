@@ -1,0 +1,7 @@
+﻿fichier_source,lab,id_instrument,annee,point,raison_exclusion
+ILA 60-20-.xlsx,lab 82,INST-82,2020,10,EXCLU: aucune valeur exploitable (valeur_reference/min/max tous vides)
+ILA 60-21-.xlsx,lab 82,INST-82,2021,10,EXCLU: aucune valeur exploitable (valeur_reference/min/max tous vides)
+ILA60-22-.xlsx,lab 82,INST-82,2022,10,EXCLU: aucune valeur exploitable (valeur_reference/min/max tous vides)
+ILA61-23-.xlsx,lab 82,INST-82,2023,10,EXCLU: aucune valeur exploitable (valeur_reference/min/max tous vides)
+ILA60-24.xlsx,lab 82,INST-82,2024,10,EXCLU: aucune valeur exploitable (valeur_reference/min/max tous vides)
+ILA61-2025-.xlsx,lab 82-2025,INST-82,2025,10,EXCLU: aucune valeur exploitable (valeur_reference/min/max tous vides)

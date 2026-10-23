@@ -1,0 +1,66 @@
+{
+  "model_name": "Lasso",
+  "model_version": "final-20260916T081459",
+  "model_type": "sklearn.pipeline.Pipeline (SimpleImputer[median] -> StandardScaler -> Lasso), predit un DELTA",
+  "artifact_file": "models/regression_Lasso.joblib",
+  "training_date": "2026-09-16T08:14:59",
+  "trained_by": "notebooks/05_Regression_Model.ipynb (section 16)",
+  "target_variable": "delta_next_valeur_reference",
+  "target_description": "Variation predite vers la PROCHAINE campagne de calibration REELLE. target_next_valeur_reference est toujours l'observation reelle suivante - aucune ligne synthetique ne peut la redefinir.",
+  "prediction_mode": "delta_normalized_v2",
+  "prediction_unit": "UNKNOWN / A CONFIRMER - non enregistre dans les donnees ILA source.",
+  "feature_order": [
+    "pos_in_band",
+    "ewm_pos_in_band",
+    "recent_shift",
+    "rolling_trend",
+    "uncertainty_norm"
+  ],
+  "fitted_coefficients": {
+    "pos_in_band": -0.0,
+    "ewm_pos_in_band": -0.0,
+    "recent_shift": -0.4616564653998064,
+    "rolling_trend": 0.0,
+    "uncertainty_norm": 0.0
+  },
+  "fitted_intercept": -0.280542630169896,
+  "training_dataset": "data/processed/ILA_train_augmente_features.csv (train reel + copies augmentees sures ; TEST jamais inclus)",
+  "cv_strategy_reference": "GroupShuffleSplit par instrument (80/20) pour train/test ; GroupKFold (5-fold, augmentation fold-safe) sur le train uniquement pour la selection d'alpha.",
+  "n_real_training_rows": 655,
+  "n_augmented_training_rows": 1896,
+  "n_training_rows": 2551,
+  "n_instruments_total": 22,
+  "held_out_test_evaluation": [
+    {
+      "model": "Baseline_no_drift",
+      "MAE": 0.999302325581395,
+      "RMSE": 1.4107815745758765,
+      "R2": 0.9991952984040379,
+      "n_test_rows": 86
+    },
+    {
+      "model": "RealOnly_Lasso",
+      "MAE": 1.6403326824072444,
+      "RMSE": 1.9380713903997222,
+      "R2": 0.9984813599608249,
+      "n_test_rows": 86
+    },
+    {
+      "model": "Real_Plus_Augmented_Lasso_DEPLOYED",
+      "MAE": 0.9443339250976931,
+      "RMSE": 1.2909513781777044,
+      "R2": 0.9993261936868324,
+      "n_test_rows": 86
+    }
+  ],
+  "evaluation_metrics_groupkfold": {
+    "note": "Evaluation principale = split instrument-disjoint (GroupShuffleSplit), pas GroupKFold ; cle conservee pour compatibilite avec src/api/services/prediction_service.py qui lit exactement ce chemin pour la decision baseline-vs-modele.",
+    "held_out_test_MAE": 0.9443339250976931,
+    "baseline_persistence_MAE_for_comparison": 0.999302325581395,
+    "beats_baseline_on_this_split": true,
+    "beats_baseline": false
+  },
+  "known_limitations": [
+    "Sur ce split precis, reel+augmente bat la baseline de persistance. Sur 10 splits independants, l'augmentation bat la baseline dans 3/10 cas (MAE moyenne non inferieure a la baseline) - coherent avec experiments/audit_v3/FINAL_REPORT.md : sur ce volume de donnees (~30 lignes/instrument), aucune approche ne bat de facon fiable la persistance simple. Resultat rapporte tel quel, non force."
+  ]
+}

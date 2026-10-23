@@ -1,0 +1,69 @@
+{
+  "model_name": "Lasso_v3_augmented",
+  "model_version": "3.0.0-lasso-v3-augmented-20260909T094046",
+  "model_type": "sklearn.pipeline.Pipeline (SimpleImputer[median] -> StandardScaler -> Lasso), predicts DELTA, trained on real + noise-augmented data (matching src/data/augment_ila.py's exact noise model)",
+  "artifact_file": "models/regression_Lasso_v3_augmented.joblib",
+  "training_date": "2026-09-09T09:40:46+00:00",
+  "trained_by": "train_v3_augmented.py",
+
+  "target_variable": "delta_next_valeur_reference (target_next_valeur_reference - valeur_reference)",
+  "target_description": "The CHANGE (drift) in the instrument's reference value between the current measurement and its next calibration/verification campaign. The API reconstructs and returns the absolute predicted next value (valeur_reference + predicted_delta).",
+
+  "prediction_mode": "delta_normalized_v2",
+
+  "prediction_unit": "UNKNOWN / REQUIRES CONFIRMATION - not recorded in the source ILA data. 'valeur_reference' is instrument-category dependent (see reports/data_dictionary/Data_Dictionary.xlsx).",
+
+  "feature_order": ["pos_in_band", "ewm_pos_in_band", "recent_shift", "rolling_trend", "uncertainty_norm"],
+  "feature_notes": {
+    "pos_in_band": "(valeur_reference - consigne) / (EMT_haute - EMT_basse) - coefficient 0 (not used).",
+    "ewm_pos_in_band": "(ewm_mean - consigne) / (EMT_haute - EMT_basse) - coefficient 0 (not used).",
+    "recent_shift": "(valeur_reference - ewm_mean) / (EMT_haute - EMT_basse) - THE ONLY FEATURE WITH A NON-ZERO COEFFICIENT (-0.485). Captures regression-to-the-mean: when the current reading is above its own recent historical average, the model predicts a corresponding downward correction, and vice versa.",
+    "rolling_trend": "(rolling_mean_3 - moving_average_5) / (EMT_haute - EMT_basse) - coefficient 0 (not used).",
+    "uncertainty_norm": "(max - min) / (EMT_haute - EMT_basse) - coefficient 0 (not used)."
+  },
+
+  "fitted_coefficients": {
+    "pos_in_band": -0.0,
+    "ewm_pos_in_band": -0.0,
+    "recent_shift": -0.4847764285982529,
+    "rolling_trend": 0.0,
+    "uncertainty_norm": 0.0
+  },
+  "fitted_intercept": -0.3137727006131014,
+
+  "why_augmentation_helps_here": "A real, statistically significant regression-to-the-mean pattern exists in the real data alone (recent_shift vs target_delta: Pearson r=-0.368, p<0.000001, n=624 real training rows) - but Lasso cannot confidently assign it a non-zero coefficient from only ~36 rows/instrument (verified directly: real-only training collapses to all-zero coefficients, the same failure mode found in v2). Augmentation adds ~1100 additional (X,y) pairs built by perturbing each real row's CURRENT reading with noise ~ N(0, incertitude) - the instrument's own measurement uncertainty, using the exact same noise model as src/data/augment_ila.py - while holding its real historical features (ewm_mean, rolling stats) and its real future outcome (target_next_valeur_reference) fixed. This reinforces the SAME real, pre-existing pattern rather than inventing a new one, letting the regularized model detect and use it with confidence.",
+
+  "preprocessing_description": "The saved artifact is a single scikit-learn Pipeline (SimpleImputer[median] -> StandardScaler -> Lasso) predicting the DELTA. The API computes the 5 normalized features server-side from the same 12 raw physical inputs the metrologist already enters (no UI/schema change). Training data: 741 real rows + 1,386 noise-augmented rows (3 augmented copies per real row, using each row's own recorded measurement uncertainty).",
+
+  "training_dataset": "data/processed/ILA_features_selected.csv + data/processed/ILA_cleaned.csv (for incertitude) + augmentation via src/data/augment_ila.py's noise model, applied consistently in train_v3_augmented.py",
+  "cv_strategy_reference": "GroupKFold (grouped by id_instrument, 5 folds). Augmentation is generated separately for each fold's training portion only (never leaking into the held-out test fold), and the alpha search itself is honest (evaluated via the same held-out folds, not a separate optimistic split).",
+  "n_real_training_rows": 741,
+  "n_augmented_training_rows": 1386,
+  "n_training_rows": 2127,
+  "n_instruments": 22,
+
+  "evaluation_metrics_groupkfold": {
+    "MAE": 2.1200999225820314,
+    "RMSE": 33.204428113384644,
+    "MedAE": 0.5552213715638139,
+    "R2": 0.9270826820627774,
+    "baseline_persistence_MAE_for_comparison": 1.9570715249662618,
+    "beats_baseline": false
+  },
+  "evaluation_metrics_chronological_reference": {
+    "MAE": 0.7387,
+    "baseline_persistence_MAE_for_comparison": 0.5220,
+    "note": "Computed via train_v3_augmented.py's chronological check (train on years <= 2024, test on years > 2024). Provided as a secondary reference point; GroupKFold is the primary reported metric for this model card, matching v1/v2 convention."
+  },
+
+  "known_limitations": [
+    "IMPORTANT: this model does NOT beat the trivial persistence baseline under either validation strategy (GroupKFold: 2.120 vs baseline 1.957; chronological: 0.739 vs baseline 0.522). It is the closest of any approach tested in this project, and should be described that way - not as 'beating' the baseline.",
+    "UNLIKE v1 and v2, this model has a real, non-zero, interpretable coefficient: recent_shift = -0.485. This reflects a genuine, statistically verified regression-to-the-mean pattern present in the real (non-augmented) data alone (Pearson r=-0.368, p<0.000001, n=624) - augmentation stabilized detection of this pre-existing signal rather than inventing one. See why_augmentation_helps_here above.",
+    "Augmentation is NOT a substitute for more real calibration data. The improvement comes from more confidently detecting an already-present but statistically noisy real pattern, not from creating new information. It cannot close the remaining gap to baseline, which the audit's other experiments (subset restriction to well-documented instruments) attribute to insufficient real history per instrument.",
+    "The other 4 features (pos_in_band, ewm_pos_in_band, rolling_trend, uncertainty_norm) all have zero coefficients - they do not contribute to this model's predictions. Only recent_shift and the intercept are used.",
+    "R-squared is inflated and should not be trusted alone: instrument scales vary from -24 to 553, so any predictor that gets roughly the right scale regime achieves R2 > 0.9 regardless of genuine drift-prediction skill. MAE against baseline is the trustworthy metric.",
+    "No scientifically validated drift threshold exists. The API and UI must never label a prediction 'safe', 'critical', or 'dangerous' - only 'prediction generated' or the baseline-first recommendation, with a neutral, factual interpretation.",
+    "This tool is a decision-support aid. It must never automatically replace a metrologist's professional judgement, and does not by itself constitute ISO/IEC 17025 evidence of conformity.",
+    "See AUDIT_REPORT.md and experiments/audit_v3/FINAL_REPORT.md for the full audit trail, including the v1 (collinear features) -> v2 (normalized features, zero coefficients) -> v3 (augmented, non-zero coefficient) progression."
+  ]
+}

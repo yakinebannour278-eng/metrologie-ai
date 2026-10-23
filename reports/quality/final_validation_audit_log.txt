@@ -1,0 +1,184 @@
+
+====================================================================================================
+1. COMMENT ILA_test_reel_features.csv A ETE CONSTRUIT
+====================================================================================================
+Code exact (train_v4_corrected.py / notebook 05 section 16, identique):
+  gss = GroupShuffleSplit(n_splits=1, test_size=0.2, random_state=42)
+  tr_idx, te_idx = next(gss.split(cleaned, groups=cleaned["id_instrument"]))
+  test_reel = cleaned.iloc[te_idx].copy()   # cleaned = ILA_cleaned.csv, donnees REELLES
+  test_feat = build_ratio_features(engineer_features_real(test_reel))
+engineer_features_real() est appele UNIQUEMENT sur test_reel (jamais sur un melange reel+augmente) : rolling/EWM/lag/target sont calcules a partir de cette sous-serie chronologique reelle, independamment du train.
+
+====================================================================================================
+2. AUCUNE LIGNE AUGMENTEE DANS LE TEST ?
+====================================================================================================
+Repartition de la colonne 'origine' dans ILA_test_reel_features.csv :
+origine
+reelle    91
+VERDICT : PASS - 100% reelle
+
+====================================================================================================
+3. LE TEST NE CONTIENT QUE DES MESURES REELLES (verification par jointure exacte)
+====================================================================================================
+Lignes de test dont (id_instrument, annee, point_numeric, valeur_reference) existe EXACTEMENT dans ILA_cleaned.csv (donnees reelles sources) : 91 / 91
+VERDICT : PASS
+
+====================================================================================================
+4. SPLIT CHRONOLOGIQUE PAR INSTRUMENT - ANNEES COUVERTES
+====================================================================================================
+Instruments TEST (annee_min, annee_max, nb_annees_distinctes, nb_lignes) :
+                                annee_min  annee_max  n_annees  n_lignes
+id_instrument                                                           
+INST-03B-CHAMBREDEFERMENTATION       2020       2025         6        12
+INST-03B-PETRIN                      2020       2025         6         6
+INST-153A                            2025       2025         1         5
+INST-19D-CONFORMITE                  2022       2022         1         9
+INST-47A                             2020       2025         6        59
+
+Instruments TRAIN (annee_min, annee_max, nb_annees_distinctes, nb_lignes) :
+               annee_min  annee_max  n_annees  n_lignes
+id_instrument                                          
+INST-08A            2020       2025         6        18
+INST-08B            2020       2025         6        18
+INST-114            2022       2025         4        36
+INST-11B            2020       2025         6        24
+INST-139            2023       2025         3         9
+INST-145            2020       2025         6        54
+INST-19A            2020       2025         6        54
+INST-19B            2020       2025         6        54
+INST-19C            2021       2021         1         9
+INST-19D            2022       2025         4        36
+INST-20B            2020       2025         6        30
+INST-47B            2020       2025         6        60
+INST-62             2020       2025         6        54
+INST-82             2020       2025         6        54
+INST-83             2020       2025         6        54
+INST-83ACONG        2020       2025         6        54
+INST-84             2020       2025         6        54
+
+Annees en commun entre calendriers train et test (attendu : possible, le split est PAR INSTRUMENT, pas par annee - ce n'est pas un probleme tant qu'aucun ID d'instrument n'est partage) : [2020, 2021, 2022, 2023, 2024, 2025]
+Instruments partages entre train et test : set() -> VERDICT : PASS (vide)
+
+====================================================================================================
+5. NOMBRE D'OBSERVATIONS REELLES PAR INSTRUMENT (train vs test)
+====================================================================================================
+TRAIN :
+id_instrument
+INST-08A        18
+INST-08B        18
+INST-114        36
+INST-11B        24
+INST-139         9
+INST-145        54
+INST-19A        54
+INST-19B        54
+INST-19C         9
+INST-19D        36
+INST-20B        30
+INST-47B        60
+INST-62         54
+INST-82         54
+INST-83         54
+INST-83ACONG    54
+INST-84         54
+Total TRAIN : 672 lignes reelles, 17 instruments
+
+TEST :
+id_instrument
+INST-03B-CHAMBREDEFERMENTATION    12
+INST-03B-PETRIN                    6
+INST-153A                          5
+INST-19D-CONFORMITE                9
+INST-47A                          59
+Total TEST : 91 lignes reelles, 5 instruments
+
+====================================================================================================
+6-7. MAE TEST (0.894) vs MAE MOYENNE ROBUSTESSE (2.434) - LES 10 SPLITS EN DETAIL
+====================================================================================================
+ seed  baseline_MAE  HuberRegressor_MAE  beats_baseline
+    0      0.333378            0.389737           False
+    1      1.083421            0.981154            True
+    2      0.460221            0.440435            True
+    3      1.215845            1.068308            True
+    4      0.962746            0.924142            True
+    5      0.608777            0.595642            True
+    6      6.830922            6.821300            True
+    7      7.127351            7.083797            True
+    8      0.408571            0.426638           False
+    9      5.562265            5.613321           False
+
+seed=42 (celui utilise pour le test final) : baseline_MAE=N/A - seed 42 non recalcule dans le tableau robustesse (10 seeds testes = 0..9)
+Etendue de baseline_MAE sur les 10 splits (seeds 0-9) : min=0.3334, max=7.1274
+
+EXPLICATION : le MAE est en unites ABSOLUES de valeur_reference, qui varie enormement d'un instrument a l'autre (echelles/consignes tres differentes). Avec seulement 5 instruments de test par split, UN SEUL instrument 'difficile' (grande variance de mesure ou dérive réelle plus forte) peut multiplier le MAE moyen par 5 a 20x. Le split seed=42 utilise pour le test officiel est tombe sur des instruments de test relativement 'faciles' (MAE proches de 1), alors que plusieurs des 10 seeds de robustesse (ex. seeds 6, 7, 9 avec baseline_MAE > 5) sont tombes sur des instruments beaucoup plus difficiles. Le MAE absolu n'est donc PAS directement comparable entre splits differents ; c'est precisement pour cette raison que le controle de robustesse compare Huber A LA BASELINE SUR LE MEME SPLIT a chaque fois, plutot que de comparer des MAE absolus entre splits.
+
+====================================================================================================
+8. MAE PAR INSTRUMENT (Huber vs baseline), split officiel seed=42
+====================================================================================================
+                 id_instrument  n_rows  baseline_MAE  huber_MAE  huber_better
+INST-03B-CHAMBREDEFERMENTATION      11      0.225455   0.197635          True
+               INST-03B-PETRIN       5      0.128000   0.194058         False
+                     INST-153A       4      0.125000   0.125000         False
+           INST-19D-CONFORMITE       8      0.115000   0.140688         False
+                      INST-47A      58      1.403448   1.243585          True
+
+====================================================================================================
+9. L'AUGMENTATION NE CREE PAS D'HISTORIQUE SYNTHETIQUE POUR UNE AUTRE LIGNE REELLE
+====================================================================================================
+Comparaison : pour chaque ligne REELLE presente dans ILA_train_augmente_features.csv, ses colonnes d'historique (['rolling_mean_3', 'moving_average_5', 'ewm_mean', 'lag1_valeur_reference', 'chrono_rank_in_instrument', 'target_next_valeur_reference']) sont-elles IDENTIQUES a celles calculees sur le train reel seul (avant toute augmentation) ? -> True
+VERDICT : PASS - aucune ligne reelle n a ete modifiee par l ajout de lignes augmentees
+Nombre de lignes augmentees dans la table d'entrainement : 1896 (toutes generees par copie VERBATIM de l'historique + cible de leur ligne reelle source, jamais par recalcul shift/rolling sur une sequence melangee - voir augment_safe() dans le notebook)
+
+====================================================================================================
+10. target_next_valeur_reference CONSTRUIT SANS FUITE FUTURE
+====================================================================================================
+Code exact : g['valeur_reference'].shift(-1) applique APRES tri chronologique [id_instrument, annee, point_numeric], groupby('id_instrument'), sur donnees REELLES uniquement.
+Lignes avec target NaN (derniere observation reelle de chaque instrument, correctement exclue du jeu supervise) : train=17 (attendu=17), test=5 (attendu=5)
+VERDICT : PASS
+
+====================================================================================================
+11. SCALING/IMPUTATION FIT UNIQUEMENT SUR LE TRAIN
+====================================================================================================
+Code : Pipeline([('imputer', SimpleImputer()), ('scaler', StandardScaler()), ('model', ...)]).pipe.fit(X_train, y_train) est le SEUL appel .fit() sur le pipeline complet ; X_test ne passe que par .transform() via pipe.predict(X_test).
+NaN par feature dans le train augmente (avant imputation) : {'pos_in_band': np.int64(887), 'ewm_pos_in_band': np.int64(887), 'recent_shift': np.int64(23), 'rolling_trend': np.int64(23), 'uncertainty_norm': np.int64(23)}
+  -> cause racine : 870/2551 lignes ont 'consigne' manquant a la source (deja signale par 'consigne_missing' dans ILA_cleaned.csv, notebook 02) ; pos_in_band et ewm_pos_in_band en dependent directement -> NaN -> impute par la mediane par le Pipeline. C'est une limite de qualite de donnees preexistante, PAS une fuite.
+Moyennes utilisees par le StandardScaler (scaler.mean_)            : [-0.1286, -0.127, -0.0024, 0.002, 0.4146]
+Moyennes du TRAIN APRES imputation (ce a quoi scaler.mean_ doit correspondre) : [-0.1286, -0.127, -0.0024, 0.002, 0.4146]
+(pour reference seulement, PAS comparable directement) Moyennes brutes train, skipna : [-0.1411, -0.1438, -0.0024, 0.002, 0.415]
+(pour reference seulement, PAS utilisees pour fitter le scaler) Moyennes brutes test, skipna : [-0.7382, -0.7363, 0.0021, 0.0011, 0.3436]
+scaler.mean_ correspond EXACTEMENT aux moyennes du TRAIN apres imputation (comparaison correcte) : True
+VERDICT : PASS
+
+====================================================================================================
+12. LE REGLAGE D'HYPERPARAMETRES N'UTILISE QUE TRAIN/CV, JAMAIS LE TEST
+====================================================================================================
+Code de reglage (GridSearchCV, section 16) :
+  gs = GridSearchCV(pipe, param_grid, cv=GroupKFold(n_splits=...), scoring='neg_mean_absolute_error')
+  gs.fit(X_train, y_train_delta, groups=groups_train_full)
+X_test / y_test_abs n'apparaissent NULLE PART dans l'appel gs.fit(...) ni dans la construction de la grille de recherche. Verification par recherche textuelle dans le code source :
+'X_test' present dans le bloc de reglage d'hyperparametres : False
+'y_test' present dans le bloc de reglage d'hyperparametres : False
+VERDICT : PASS
+
+====================================================================================================
+13. RE-EXECUTION COMPLETE DEPUIS UN ENVIRONNEMENT PROPRE - REPRODUCTIBILITE
+====================================================================================================
+Re-execution du split (meme random_state=42) : memes instruments train ? True | memes instruments test ? True
+MAE test (execution originale) : 0.894160
+MAE test (re-execution independante, meme seed) : 0.894160
+Difference : 0.00e+00
+Coefficients identiques : True
+VERDICT : PASS - parfaitement reproductible
+
+====================================================================================================
+VERDICT FINAL
+====================================================================================================
+Aucune fuite de donnees detectee (items 2, 3, 9, 10, 11, 12 : PASS - item 11 verifie avec la comparaison correcte post-imputation).
+
+LIMITE DE QUALITE DE DONNEES DECOUVERTE PENDANT CET AUDIT (independante de toute fuite) : 34% des lignes d'entrainement (870/2551) ont 'consigne' manquant a la source, ce qui rend pos_in_band et ewm_pos_in_band (2 des 5 features du modele) manquants pour ces lignes et impute par la mediane. Cela reduit potentiellement le signal utile pour ces lignes sans etre une fuite. Cette limite preexistait (colonne 'consigne_missing' deja presente dans ILA_cleaned.csv depuis le notebook 02) et n'a pas ete introduite par la correction v4/le benchmark.
+Split train/test disjoint par instrument, confirme (item 4).
+Resultats parfaitement reproductibles (item 13 : PASS).
+
+NUANCE IMPORTANTE (items 6-7) : le MAE de 0.894 sur le split officiel (seed=42) est favorable car ce split contient des instruments de test avec un MAE de baseline naturellement bas (~1.0). Sur l'ensemble des 10 splits de robustesse, la MAE absolue varie de 0.33 a 7.13 selon les instruments tires au sort - ce n'est PAS un signe de fuite, c'est la consequence attendue d'un tres petit nombre d'instruments de test (5) avec des echelles de mesure heterogenes. La comparaison valide n'est donc jamais le MAE absolu entre splits, mais Huber vs baseline SUR LE MEME split, a chaque fois - et sur ce critere, Huber gagne dans 7/10 splits, avec une MAE moyenne legerement inferieure (2.434 vs 2.459, soit environ 1% d'amelioration relative).
+
+HONNETETE SUR L'AMPLEUR DE L'EFFET : 7/10 est une majorite, pas une victoire ecrasante, et le gain moyen agrege (~1%) est modeste. Ce n'est pas un artefact de fuite (tous les controles structurels passent), mais c'est un signal reel MODESTE, pas spectaculaire.

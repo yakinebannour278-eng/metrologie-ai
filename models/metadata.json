@@ -1,0 +1,85 @@
+{
+  "model_name": "HuberRegressor",
+  "model_version": "final-benchmarked-20260918T080235",
+  "model_type": "sklearn.pipeline.Pipeline (SimpleImputer[median] -> StandardScaler -> HuberRegressor), predicts DELTA",
+  "artifact_file": "models/regression_active_model.joblib",
+  "training_date": "2026-09-18T08:02:35",
+  "trained_by": "notebooks/05_Regression_Model.ipynb (section 16, full algorithm benchmark)",
+  "target_variable": "delta_next_valeur_reference",
+  "target_description": "Predicted change to the next REAL calibration campaign. target_next_valeur_reference is always the next REAL chronological observation.",
+  "prediction_mode": "delta_normalized_v2",
+  "prediction_unit": "UNKNOWN / requires confirmation - not recorded in source ILA data.",
+  "feature_order": [
+    "pos_in_band",
+    "ewm_pos_in_band",
+    "recent_shift",
+    "rolling_trend",
+    "uncertainty_norm"
+  ],
+  "fitted_coefficients": {
+    "pos_in_band": 0.10019142891250431,
+    "ewm_pos_in_band": -0.1436848326163425,
+    "recent_shift": -0.8155351591895756,
+    "rolling_trend": 0.09901431883982702,
+    "uncertainty_norm": -0.042897837001264615
+  },
+  "fitted_intercept": 0.03878413362989438,
+  "training_dataset": "data/processed/ILA_train_augmente_features.csv (train real + safe augmented copies; TEST instruments never included)",
+  "n_training_rows": 2551,
+  "n_instruments": 22,
+  "held_out_test_evaluation": {
+    "rank": 1,
+    "model": "HuberRegressor",
+    "MAE": 0.8941596904014965,
+    "RMSE": 1.252781628742184,
+    "R2": 0.9993654496953426,
+    "MedAE": 0.5680872481884194,
+    "Bias": 0.09365143888311472,
+    "pred_std": 49.813452417460624,
+    "uses_features": true,
+    "beats_baseline": false,
+    "CV_MAE_GroupKFold": 1.2135303587909154,
+    "Chrono_val_MAE": 0.6557277737805305,
+    "train_time_sec": 0.007048142000002144,
+    "hyperparameters": "{'alpha': 0.0001, 'epsilon': 1.35, 'fit_intercept': True, 'max_iter': 1000, 'tol': 1e-05, 'warm_start': False}",
+    "note": "This number (instrument-disjoint GroupShuffleSplit, single seed=42) is kept as a secondary/reference metric. It is NOT the deployment decision criterion - see 'primary_validation_chronological' for the metric that determines beats_baseline."
+  },
+  "evaluation_metrics_groupkfold": {
+    "note": "beats_baseline is now driven by PRIMARY CHRONOLOGICAL validation (see 'primary_validation_chronological' above), per project decision 2026-09-18: chronological future-of-known-instrument prediction is the real deployment scenario, not instrument-disjoint generalization. Under that validation, HuberRegressor (and all 13 other tested algorithms) fail to beat the persistence baseline, so beats_baseline=False and the API/UI now recommend the persistence baseline. The GroupShuffleSplit/robustness numbers below are KEPT for reference (secondary/robustness protocols, per project methodology) but are no longer the selection criterion.",
+    "held_out_test_MAE": 0.8941596904014965,
+    "baseline_persistence_MAE_for_comparison": 0.999302325581395,
+    "beats_baseline": false,
+    "robustness_wins": "7/10 independent splits"
+  },
+  "known_limitations": [
+    "PRIMARY CHRONOLOGICAL VALIDATION (2026-09-18): 0/14 algorithms beat the persistence baseline when evaluated on genuinely future, held-out-in-time observations of KNOWN instruments (MAE 0.626 for the best algorithm, Huber, vs 0.592 for simple persistence). Consequently NO ML model is currently recommended for production; the persistence baseline is the recommended prediction (recommended_source=baseline_persistence). See 'primary_validation_chronological' and experiments/audit_v3/model_comparison_PRIMARY_CHRONOLOGICAL.csv.",
+    "HuberRegressor was previously selected by an instrument-disjoint GroupShuffleSplit (single random 80/20 instrument split, seed=42, MAE=0.894) and confirmed only mildly robust under repeated splits (7/10 seeds, mean MAE 2.43 vs baseline 2.46 - see reports/quality/final_validation_audit.json). That protocol answers a different question (generalization to brand-new instruments) than this project's real use case (predicting a KNOWN instrument's future drift) and is retained here only as a secondary/robustness metric."
+  ],
+  "primary_validation_chronological": {
+    "description": "PRIMARY validation per project decision (2026-09-18): leakage-safe, per-instrument chronological split within the 17 TRAIN-pool instruments (older ~80% of each instrument's real observations = history/train, newest ~20% = held-out future/test). Synthetic augmented rows are fit ONLY on the history portion and never enter the historical sequence or the held-out future rows, which are 100% real.",
+    "method": "per-instrument chronological split on chrono_rank_in_instrument, ~80% history / ~20% future",
+    "n_test_obs": 135,
+    "n_instruments": 17,
+    "persistence_baseline_MAE": 0.5923,
+    "best_algorithm_row": {
+      "Algorithm": "Huber",
+      "Chronological_MAE": 0.626,
+      "Chronological_RMSE": 1.2167,
+      "Chronological_R2": 0.9999,
+      "Chronological_Bias": 0.0135,
+      "Chronological_MedAE": 0.2798,
+      "GroupKFold_MAE": 1.2135,
+      "RepeatedGSS_mean_MAE": 2.4344,
+      "RepeatedGSS_wins": "7/10",
+      "Persistence_Chronological_MAE": 0.5923,
+      "Improvement_vs_Persistence_pct": -5.7,
+      "Beats_Persistence_Chronologically": false,
+      "n_chrono_obs": 135,
+      "n_chrono_instruments": 17
+    },
+    "algorithms_beating_persistence_chronologically": 0,
+    "algorithms_tested_chronologically": 14,
+    "results_table_csv": "experiments/audit_v3/model_comparison_PRIMARY_CHRONOLOGICAL.csv"
+  },
+  "recommended_production_source": "baseline_persistence"
+}

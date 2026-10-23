@@ -1,0 +1,36 @@
+{
+  "model_name": "Lasso",
+  "role": "meilleur_modele_appris (pour explicabilite / regression quantile / alertes graduees)",
+  "target": "target_next_valeur_reference",
+  "features": [
+    "EMT_basse",
+    "EMT_haute",
+    "max",
+    "rolling_min_3",
+    "consigne",
+    "valeur_reference",
+    "ewm_mean",
+    "moving_average_5",
+    "min",
+    "rolling_median_3",
+    "rolling_mean_3",
+    "rolling_max_3"
+  ],
+  "n_training_rows": 741,
+  "n_instruments": 22,
+  "cv_strategy_reference": "GroupKFold",
+  "metrics_groupkfold": {
+    "MAE": 5.010038195481298,
+    "RMSE": 18.489472552039505,
+    "MedAE": 2.846994470103625,
+    "R2": 0.5551321590136847,
+    "explained_variance": 0.558697282447676,
+    "MAPE_pct": 26.444285246832777,
+    "directional_accuracy_pct": 51.021857926302594,
+    "accord_conformite_pct": 47.92304118037316,
+    "faux_negatifs_derive": 2.6,
+    "faux_positifs_derive": 74.4
+  },
+  "trained_at": "2026-08-23T00:05:33",
+  "source_dataset": "data/processed/ILA_features_selected.csv"
+}
